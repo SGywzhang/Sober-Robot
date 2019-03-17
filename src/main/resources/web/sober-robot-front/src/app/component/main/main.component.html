@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+  <span style="margin:auto">Sober Robot</span>
+</mat-toolbar>
+
+<mat-card>
+  <mat-card-actions>
+    <input type="file" (change)="onFileSelected($event)" multiple>
+    <button mat-raised-button color="primary" type="button" (click)="onUpload()">Upload</button>
+  </mat-card-actions>
+
+  <div *ngIf="result">
+    <mat-card-content *ngFor="let img of result">
+      <mat-card-header>
+        <mat-card-title>{{img.classifyClass}}</mat-card-title>
+        <mat-card-subtitle>{{img.score}}</mat-card-subtitle>
+      </mat-card-header>
+      <img [src]="'data:image/png;base64,' + img.image">
+    </mat-card-content>
+  </div>
+</mat-card>
