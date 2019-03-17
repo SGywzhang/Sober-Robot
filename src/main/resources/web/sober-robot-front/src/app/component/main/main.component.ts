@@ -9,6 +9,7 @@ import {SoberRobotService} from "../../service/sober-robot/sober-robot.service";
 export class MainComponent implements OnInit {
   selectedFile: File[] = null;
   result = null;
+  loading = false;
   constructor(private soberRobotService: SoberRobotService) { }
 
   ngOnInit() {
@@ -23,9 +24,11 @@ export class MainComponent implements OnInit {
     for (let i = 0; i < this.selectedFile.length; i++) {
       fd.append('images', this.selectedFile[i], this.selectedFile[i].name);
     }
+    this.loading = true;
     this.soberRobotService.upload(fd).subscribe(
       res => this.result = res,
-      err => console.log(err)
+      err => console.log(err),
+      () => this.loading = false
     )
   }
 }

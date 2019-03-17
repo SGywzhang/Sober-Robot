@@ -9,7 +9,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
-
+import {MatProgressSpinnerModule} from '@angular/material';
 const appRoutes: Routes = [
   {path: 'index', component: MainComponent}
 ];
@@ -20,6 +20,7 @@ const appRoutes: Routes = [
     MainComponent
   ],
   imports: [
+    MatProgressSpinnerModule,
     MatCardModule,
     MatButtonModule,
     MatToolbarModule,

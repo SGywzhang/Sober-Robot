@@ -4,15 +4,21 @@
 
 <mat-card>
   <mat-card-actions>
-    <input type="file" (change)="onFileSelected($event)" multiple>
+    <button mat-raised-button color="primary" (click)="fileInput.click()">Choose</button>
+    <input hidden type="file" (change)="onFileSelected($event)" #fileInput multiple>
+    <!--<input type="file" (change)="onFileSelected($event)" multiple>-->
     <button mat-raised-button color="primary" type="button" (click)="onUpload()">Upload</button>
   </mat-card-actions>
+
+  <div *ngIf="loading">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
 
   <div *ngIf="result">
     <mat-card-content *ngFor="let img of result">
       <mat-card-header>
         <mat-card-title>{{img.classifyClass}}</mat-card-title>
-        <mat-card-subtitle>{{img.score}}</mat-card-subtitle>
+        <mat-card-subtitle>Score: {{img.score}}</mat-card-subtitle>
       </mat-card-header>
       <img [src]="'data:image/png;base64,' + img.image">
     </mat-card-content>
