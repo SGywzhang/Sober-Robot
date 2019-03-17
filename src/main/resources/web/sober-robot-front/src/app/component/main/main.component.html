@@ -15,13 +15,15 @@
   </div>
 
   <div *ngIf="result">
-    <mat-card-title-group *ngFor="let img of result">
-      <mat-card-title>{{img.classifyClass}}</mat-card-title>
-      <mat-card-subtitle>Score: {{img.score}}</mat-card-subtitle>
-      <img mat-card-lg-image [src]="'data:image/png;base64,' + img.image" alt="res">
+    <mat-card *ngFor="let img of result">
+      <mat-card-title-group>
+        <mat-card-title>{{img.classifyClass}}</mat-card-title>
+        <mat-card-subtitle>Score: {{img.score}}</mat-card-subtitle>
+        <img mat-card-lg-image [src]="'data:image/png;base64,' + img.image" alt="res">
+      </mat-card-title-group>
       <mat-card-actions>
         <button mat-raised-button color="warn">DO STH</button>
       </mat-card-actions>
-    </mat-card-title-group>
+    </mat-card>
   </div>
 </mat-card>
