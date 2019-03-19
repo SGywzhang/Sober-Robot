@@ -24,11 +24,15 @@ export class MainComponent implements OnInit {
     for (let i = 0; i < this.selectedFile.length; i++) {
       fd.append('images', this.selectedFile[i], this.selectedFile[i].name);
     }
+    this.selectedFile = null;
     this.loading = true;
     this.soberRobotService.upload(fd).subscribe(
-      res => this.result = res,
+      res => {
+          this.result = res;
+          console.log(res);
+      },
       err => console.log(err),
       () => this.loading = false
-    )
+    );
   }
 }

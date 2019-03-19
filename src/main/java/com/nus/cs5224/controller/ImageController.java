@@ -27,7 +27,7 @@ public class ImageController {
     @PostMapping("/upload")
     public List<RecognitionResult> uploadFile(@RequestParam("images") MultipartFile[] images) {
         return Arrays.stream(images)
-                .parallel()
+                //.parallel()
                 .map(service::classify)
                 .collect(Collectors.toList());
     }
