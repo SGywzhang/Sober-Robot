@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,7 @@ public class ImageController {
         return Arrays.stream(images)
                 .parallel()
                 .map(service::classify)
+                .sorted(Comparator.comparing(RecognitionResult::getScore).reversed())
                 .collect(Collectors.toList());
     }
 }

@@ -7,7 +7,7 @@ import {SoberRobotService} from "../../service/sober-robot/sober-robot.service";
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-  selectedFile: File[] = null;
+  selectedFile: File[] = [];
   result = null;
   loading = false;
   constructor(private soberRobotService: SoberRobotService) { }
@@ -24,7 +24,7 @@ export class MainComponent implements OnInit {
     for (let i = 0; i < this.selectedFile.length; i++) {
       fd.append('images', this.selectedFile[i], this.selectedFile[i].name);
     }
-    this.selectedFile = null;
+    this.selectedFile = [];
     this.loading = true;
     this.soberRobotService.upload(fd).subscribe(
       res => {

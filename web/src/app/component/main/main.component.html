@@ -7,7 +7,8 @@
     <button mat-raised-button color="primary" (click)="fileInput.click()">Choose</button>
     <input hidden type="file" (change)="onFileSelected($event)" #fileInput multiple>
     <!--<input type="file" (change)="onFileSelected($event)" multiple>-->
-    <button mat-raised-button color="primary" type="button" (click)="onUpload()">Upload</button>
+    <button mat-raised-button color="primary" type="button" (click)="onUpload()" [disabled]="selectedFile.length === 0">Upload</button>
+    {{selectedFile.length}} file selected
   </mat-card-actions>
 
   <div *ngIf="loading">
@@ -15,15 +16,22 @@
   </div>
 
   <div *ngIf="result">
-    <mat-card *ngFor="let img of result">
-      <mat-card-title-group *ngIf="img">
-        <mat-card-title>{{img.classifyClass}}</mat-card-title>
-        <mat-card-subtitle>Score: {{img.score}}</mat-card-subtitle>
-        <img mat-card-lg-image [src]="'data:image/png;base64,' + img.image" alt="res">
-      </mat-card-title-group>
-      <mat-card-actions *ngIf="img">
-        <button mat-raised-button color="warn">DO STH</button>
-      </mat-card-actions>
+    <mat-card *ngFor="let img of result" style="width: 50%">
+      <mat-grid-list cols="2" rowHeight="100px">
+        <mat-grid-tile [colspan]=1 [rowspan]=2 [ngStyle]="{'background-color': img.score > 0.7? 'lightpink' : 'white'}">
+          <mat-card-header *ngIf="img">
+            <mat-card-title>{{img.classifyClass}}</mat-card-title>
+            <mat-card-subtitle>Score: {{img.score}}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-lg-image [src]="'data:image/png;base64,' + img.image" alt="res">
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]=1 [rowspan]=2>
+          1.
+          2.
+          3.
+          4.
+        </mat-grid-tile>
+      </mat-grid-list>
     </mat-card>
   </div>
 </mat-card>
