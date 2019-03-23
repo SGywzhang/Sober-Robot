@@ -1,37 +1,95 @@
 <mat-toolbar color="primary">
-  <span style="margin:auto">Sober Robot</span>
+    <span style="margin:auto">Sober Robot</span>
 </mat-toolbar>
 
 <mat-card>
-  <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="fileInput.click()">Choose</button>
-    <input hidden type="file" (change)="onFileSelected($event)" #fileInput multiple>
-    <!--<input type="file" (change)="onFileSelected($event)" multiple>-->
-    <button mat-raised-button color="primary" type="button" (click)="onUpload()" [disabled]="selectedFile.length === 0">Upload</button>
-    {{selectedFile.length}} file selected
-  </mat-card-actions>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="fileInput.click()">Choose</button>
+        <input hidden type="file" (change)="onFileSelected($event)" #fileInput multiple>
+        <button mat-raised-button color="primary" type="button" (click)="onUpload()"
+                [disabled]="selectedFile.length === 0">Upload
+        </button>
+        {{selectedFile.length}} file(s) selected
+    </mat-card-actions>
 
-  <div *ngIf="loading">
-    <mat-spinner [diameter]="30"></mat-spinner>
-  </div>
+    <div *ngIf="loading">
+        <mat-spinner [diameter]="30"></mat-spinner>
+    </div>
 
-  <div *ngIf="result">
-    <mat-card *ngFor="let img of result" style="width: 50%">
-      <mat-grid-list cols="2" rowHeight="100px">
-        <mat-grid-tile [colspan]=1 [rowspan]=2 [ngStyle]="{'background-color': img.score > 80? 'red' : img.score > 60 ? 'orangered' : img.score > 40 ? 'yellow' : 'springgreen'}">
-          <mat-card-header *ngIf="img">
-            <mat-card-title>{{img.classifyClass}}</mat-card-title>
-            <mat-card-subtitle>Score: {{img.score}}</mat-card-subtitle>
-          </mat-card-header>
-          <img mat-card-lg-image [src]="'data:image/png;base64,' + img.image" alt="res">
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]=1 [rowspan]=2>
-          1.
-          2.
-          3.
-          4.
-        </mat-grid-tile>
-      </mat-grid-list>
-    </mat-card>
-  </div>
+    <mat-tab-group style="width: 100%" dynamicHeight="true">
+        <mat-tab label="Danger">
+            <div *ngIf="dangerResults">
+                <mat-card *ngFor="let img of dangerResults" style="width: 50%">
+                    <mat-grid-list cols="2" rowHeight="100px">
+                        <mat-grid-tile [colspan]=1 [rowspan]=2>
+                            <mat-card-header *ngIf="img">
+                                <mat-card-title>{{img.classifyClass}}</mat-card-title>
+                                <mat-card-subtitle>Score: {{img.score}}</mat-card-subtitle>
+                            </mat-card-header>
+                            <img mat-card-lg-image [src]="'data:image/png;base64,' + img.image" alt="res">
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]=1 [rowspan]=2>
+                            1.
+                            2.
+                            3.
+                            4.
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </mat-card>
+            </div>
+        </mat-tab>
+        <mat-tab label="Drunk">
+            <div *ngIf="drunkResults">
+                <mat-card *ngFor="let img of drunkResults" style="width: 50%">
+                    <mat-grid-list cols="2" rowHeight="100px">
+                        <mat-grid-tile [colspan]=1 [rowspan]=2
+                                       [ngStyle]="{'background-color': img.score > 80? 'red' : img.score > 60 ? 'orangered' : img.score > 40 ? 'yellow' : 'springgreen'}">
+                            <mat-card-header *ngIf="img">
+                                <mat-card-title>{{img.classifyClass}}</mat-card-title>
+                                <mat-card-subtitle>Score: {{img.score}}</mat-card-subtitle>
+                            </mat-card-header>
+                            <img mat-card-lg-image [src]="'data:image/png;base64,' + img.image" alt="res">
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]=1 [rowspan]=2>
+                            1.
+                            2.
+                            3.
+                            4.
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </mat-card>
+            </div>
+        </mat-tab>
+        <mat-tab label="Normal">
+            <div *ngIf="normalResults">
+                <mat-card *ngFor="let img of normalResults" style="width: 50%">
+                    <mat-grid-list cols="2" rowHeight="100px">
+                        <mat-grid-tile [colspan]=1 [rowspan]=2>
+                            <mat-card-header *ngIf="img">
+                                <mat-card-title>{{img.classifyClass}}</mat-card-title>
+                                <mat-card-subtitle>Score: {{img.score}}</mat-card-subtitle>
+                            </mat-card-header>
+                            <img mat-card-lg-image [src]="'data:image/png;base64,' + img.image" alt="res">
+                        </mat-grid-tile>
+                        <mat-grid-tile [colspan]=1 [rowspan]=2>
+                            1.
+                            2.
+                            3.
+                            4.
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </mat-card>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+
+    <!--<div>-->
+    <!--<iframe-->
+    <!--allow="microphone;"-->
+    <!--width="350"-->
+    <!--height="430"-->
+    <!--src="https://console.dialogflow.com/api-client/demo/embedded/fca9f4bd-a317-4913-a5a3-defd24344060">-->
+    <!--</iframe>-->
+    <!--</div>-->
+
 </mat-card>

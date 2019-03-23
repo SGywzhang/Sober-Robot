@@ -1,6 +1,7 @@
 package com.nus.cs5224.controller;
 
 import com.nus.cs5224.model.RecognitionResult;
+import com.nus.cs5224.model.RecognitionResults;
 import com.nus.cs5224.service.VisualRecognitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,11 +26,11 @@ public class ImageController {
     }
 
     @PostMapping("/upload")
-    public List<RecognitionResult> uploadFile(@RequestParam("images") MultipartFile[] images) {
-        return Arrays.stream(images)
+    public RecognitionResults uploadFile(@RequestParam("images") MultipartFile[] images) {
+        List<RecognitionResult> results = Arrays.stream(images)
                 .parallel()
                 .map(service::classify)
-                .sorted(Comparator.comparing(RecognitionResult::getScore).reversed())
                 .collect(Collectors.toList());
+        return new RecognitionResults(results);
     }
 }

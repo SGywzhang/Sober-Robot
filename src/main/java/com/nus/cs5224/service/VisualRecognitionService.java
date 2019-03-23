@@ -21,22 +21,21 @@ import java.util.Collections;
 public class VisualRecognitionService {
     private static final Logger LOG = LoggerFactory.getLogger(VisualRecognitionService.class);
     private VisualRecognition service;
-    DecimalFormat df = new DecimalFormat();
 
     @PostConstruct
     private void init() {
         IamOptions options = new IamOptions.Builder()
-                .apiKey("7Lr6c5MVWkfsdM9P4L4aG2agWLz40x-PUBpTNNBa8IVQ")
+                .apiKey("D5ikqDh4BVy9riMkTP86fUjsT5HhBccAfP89Dv_mvgOt")
+                //.apiKey("7Lr6c5MVWkfsdM9P4L4aG2agWLz40x-PUBpTNNBa8IVQ")
                 .build();
-
         service = new VisualRecognition("2018-03-19", options);
-        df.setMaximumFractionDigits(2);
     }
 
     public RecognitionResult classify(MultipartFile imageFile) {
         try {
             ClassifyOptions classifyOptions = new ClassifyOptions.Builder()
-                    .addClassifierId("DefaultCustomModel_534530996")
+                    //.addClassifierId("DefaultCustomModel_534530996")
+                    .addClassifierId("Two_class_model_569752745")
                     .imagesFile(imageFile.getInputStream())
                     .imagesFilename(imageFile.getOriginalFilename())
                     .threshold((float) 0.1)
