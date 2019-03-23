@@ -12,12 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Collections;
 
 @Service
 public class VisualRecognitionService {
     private static final Logger LOG = LoggerFactory.getLogger(VisualRecognitionService.class);
     private VisualRecognition service;
+    DecimalFormat df = new DecimalFormat();
 
     @PostConstruct
     private void init() {
@@ -26,6 +30,7 @@ public class VisualRecognitionService {
                 .build();
 
         service = new VisualRecognition("2018-03-19", options);
+        df.setMaximumFractionDigits(2);
     }
 
     public RecognitionResult classify(MultipartFile imageFile) {
@@ -40,7 +45,7 @@ public class VisualRecognitionService {
             ClassifiedImages classifiedImages = service.classify(classifyOptions).execute();
             ClassResult result = classifiedImages.getImages().get(0).getClassifiers().get(0).getClasses().get(0);
             LOG.info("{} | {}", imageFile.getOriginalFilename(), result.getClassName());
-            return new RecognitionResult(imageFile.getBytes(), imageFile.getOriginalFilename(), result.getClassName(), result.getScore());
+            return new RecognitionResult(imageFile.getBytes(), imageFile.getOriginalFilename(), result.getClassName(), new BigDecimal(result.getScore() * 100).setScale(2, RoundingMode.FLOOR).floatValue());
         } catch (Exception e) {
             return null;
         }
