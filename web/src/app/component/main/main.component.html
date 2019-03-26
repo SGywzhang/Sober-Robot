@@ -2,8 +2,8 @@
     <span style="margin:auto">Sober Robot</span>
 </mat-toolbar>
 
-<mat-card>
-    <mat-card-actions>
+<mat-card style="min-height: 100vh">
+    <mat-card-actions style="position:fixed;bottom:0;">
         <button mat-raised-button color="primary" (click)="fileInput.click()">Choose</button>
         <input hidden type="file" (change)="onFileSelected($event)" #fileInput multiple>
         <button mat-raised-button color="primary" type="button" (click)="onUpload()"
@@ -16,7 +16,7 @@
         <mat-spinner [diameter]="30"></mat-spinner>
     </div>
 
-    <mat-tab-group style="width: 100%" dynamicHeight="true">
+    <mat-tab-group dynamicHeight="true">
         <mat-tab label="Danger">
             <div *ngIf="dangerResults">
                 <mat-card *ngFor="let img of dangerResults" style="width: 50%">
